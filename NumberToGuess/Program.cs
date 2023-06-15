@@ -1,10 +1,33 @@
-﻿int intToGuess = new Random().Next(100);
+﻿var numberToGuess = new Random().Next(100);
 const int minValue = 0;
 const int maxValue = 99;
-int maxAttempts = 5;
-int attemptsLeft = maxAttempts;
+int attemptsLeft = 5;
 
-static int parseInput(int minValue, int maxValue)
+Console.WriteLine($"Guess number between {minValue}-{maxValue}");
+
+while (attemptsLeft > 0)
+{
+    attemptsLeft--;
+    int enteredNumber = GetNumberFromUser(minValue, maxValue);
+    if (enteredNumber == numberToGuess)
+    {
+        Console.WriteLine($"You guessed it!");
+        break;
+    }
+    if (attemptsLeft == 0)
+    {
+        Console.WriteLine($"Sorry you didn't guess the number, the answer was: {numberToGuess}");
+        break;
+    }
+    PrintHint(enteredNumber > numberToGuess ? "GREATER" : "LOWER");
+}
+
+void PrintHint(string hint)
+{
+    Console.WriteLine($"Your number is {hint} than the one you are trying to guess. You still have {attemptsLeft} attempt(s) left! Please try again");
+}
+
+static int GetNumberFromUser(int minValue, int maxValue)
 {
     int intTemp;
     while (!int.TryParse(Console.ReadLine(), out intTemp) ||
@@ -14,27 +37,4 @@ static int parseInput(int minValue, int maxValue)
         Console.WriteLine("Enter your guess:");
     }
     return intTemp;
-}
-
-Console.WriteLine($"Guess number between {minValue}-{maxValue}");
-
-while (attemptsLeft > 0)
-{
-    attemptsLeft--;
-    int intEntered = parseInput(minValue, maxValue);
-
-    if (intEntered > intToGuess && attemptsLeft > 0)
-        Console.WriteLine($"Your number is GREATER than the one you are trying to guess. You still have {attemptsLeft} attempt(s) left! Please try again");
-    else if (intEntered < intToGuess && attemptsLeft > 0)
-        Console.WriteLine($"Your number is LOWER than the one you are trying to guess. You still have {attemptsLeft} attempt(s) left! Please try again");
-    else if (intEntered == intToGuess)
-    {
-        Console.WriteLine($"You guessed it!");
-        break;
-    }
-    else if (attemptsLeft == 0)
-    {
-        Console.WriteLine($"Sorry you didn't guess the number, the answer was: {intToGuess}");
-        break;
-    }
 }
