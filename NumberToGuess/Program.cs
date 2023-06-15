@@ -4,8 +4,6 @@ const int maxValue = 99;
 int maxAttempts = 5;
 int attemptsLeft = maxAttempts;
 
-Console.WriteLine($"{intToGuess}");
-
 static int parseInput(int minValue, int maxValue)
 {
     int intTemp;
